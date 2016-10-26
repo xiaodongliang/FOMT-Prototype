@@ -1,0 +1,129 @@
+
+<html>
+<head>
+
+    <title>ADN Viewer Demo</title>
+    <script src="js/jquery-2.1.2.min.js"></script>
+
+
+    <link href="js/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body style="margin:0">
+
+<input type="button" id="startTrans1" value="startTrans1" />
+<input type="button" id="checkTrans1" value="checkTrans1" />
+
+<input type="button" id="startTrans2" value="startTrans2" />
+<input type="button" id="checkTrans2" value="checkTrans2" />
+<input type="text" id="textinput" value="checkTrans2" />
+
+
+
+
+<div class="dropdown">
+    <button id='xxx' class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">材料
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu" id="materialDropdown">
+        <li><a href="#">Steel</a></li>
+        <li><a href="#">Iron</a></li>
+        <li><a href="#">Glass</a></li>
+    </ul>
+</div>
+<label id="material">Steel</label>
+
+<form class="form-inline">
+    <div class="form-group">
+        <label for="exampleInputName2">Name</label>
+        <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail2">Email</label>
+        <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+    </div>
+    <button type="submit" class="btn btn-default">Send invitation</button>
+</form>
+
+
+</body>
+
+<script>
+    $('#startTrans1').click(function (evt) {
+
+        var xx = $('#textinput').val();
+
+        $.ajax ({
+            url: '/ForgeRoute/startTrans/'+'ice stadium.nwd',
+            type: 'get',
+            data: null,
+            contentType: 'application/json',
+            complete: null
+        }).done (function (response) {
+
+        }).fail (function (xhr, ajaxOptions, thrownError) {
+
+        }) ;
+    });
+
+    $('#checkTrans1').click(function (evt) {
+        $.ajax ({
+            url: '/ForgeRoute/checkTransStatus/'  +'ice stadium.nwd',
+            type: 'get',
+            data: null,
+            contentType: 'application/json',
+            complete: null
+        }).done (function (response) {
+            console.log(response);
+            var obj = eval('('+response+')');
+            console.log(obj);
+
+
+        }).fail (function (xhr, ajaxOptions, thrownError) {
+
+        }) ;
+    });
+
+
+    $('#startTrans2').click(function (evt) {
+        $.ajax ({
+            url: '/ForgeRoute/startTrans/'+ 'enviro-dome.nwd',
+            type: 'get',
+            data: null,
+            contentType: 'application/json',
+            complete: null
+        }).done (function (response) {
+
+        }).fail (function (xhr, ajaxOptions, thrownError) {
+
+        }) ;
+    });
+
+    $('#checkTrans2').click(function (evt) {
+        $.ajax ({
+            url: '/ForgeRoute/checkTransStatus/' + 'enviro-dome.nwd',
+            type: 'get',
+            data: null,
+            contentType: 'application/json',
+            complete: null
+        }).done (function (response) {
+            console.log(response);
+
+        }).fail (function (xhr, ajaxOptions, thrownError) {
+
+        }) ;
+    });
+    $(".dropdown-menu a").on("click", function(e){
+        //var linkText = $(e.relatedTarget).text(); // Get the link text
+       // alert("Click on OK button to view the dropdown menu for - " + linkText);
+        if(this.parentNode.parentNode.id=='materialDropdown')
+        {
+            var i = 0;
+        }
+    });
+
+
+</script>
+</html>
