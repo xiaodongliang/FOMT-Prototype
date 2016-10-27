@@ -8,6 +8,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
     console.log('connected');
+
+
     socket.on('au_RFQ', function(msg){
 
         var jsonObj = JSON.parse(msg);
@@ -38,6 +40,13 @@ io.on('connection', function(socket){
         //send to customer 0 only for demo
 
         io.emit('au_CNC' , msg);
+    });
+
+    socket.on('au_IoT', function(msg){
+        console.log('sending IoT  : ' + msg );
+        //emit the msg to target vendor
+        //send to customer 0 only for demo
+        io.emit('au_IoT' , msg);
     });
 });
 app.io = io;

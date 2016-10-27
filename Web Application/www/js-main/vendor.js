@@ -1,7 +1,21 @@
 
 var currentVendorNum= -1;
+//if from presenter, the [bid] button is displayed.
+var  isFromPresenter = false;
+//one attendee can only bid once
+var hasBid = false;
 
 var socket = io('http://au-china-forge.herokuapp.com/');
+
+//for CNC
+var _viewer;
+var gcode;
+var modelOffset = null;
+var timer = null;
+var gCodePoints = null;
+var lasPT= null;
+var gCodeIndex = 0;
+var material = new THREE.LineBasicMaterial({ color: 0xff0000 });
 
 function getParameterByNameFromPath (name, url) {
    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -14,13 +28,12 @@ function getParameterByNameFromPath (name, url) {
       return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-var  isFromPresenter = false;
-var hasBid = false;
 function  refreshRFQPage(msg)
 {
-   var RFQInfo = eval("(" + msg + ")");
 
-   $('#RFQ').innerHTML = '';
+
+    var RFQInfo = eval("(" + msg + ")");
+
 
    var newHTML =
            '<img id="partimg" src="data:image/jpeg;base64,' + RFQInfo.image +'"/>'
@@ -46,10 +59,16 @@ function  refreshRFQPage(msg)
            + '</div >' ;
 
 
+    $('#RFQ').innerHTML = '';
     $('#RFQ').html( newHTML);
 
-    loadView(RFQInfo.urn);
+    if(_viewer != null)
+    {
+        _viewer.uninitialize();
+        _viewer = null;
+    }
 
+    loadView(RFQInfo.urn);
 
     $('#bid').click(function(evt) {
         if(isFromPresenter) {
@@ -131,18 +150,7 @@ function loadView(urn)
     });
 }
 
-var gcode;
-var _viewer;
-var modelOffset = null;
 
-var timer = null;
-var gCodePoints = null;//= JSON.parse(gcode).gcode;
-
-var lasPT= null;
-var firstPT = false;
-var gCodeIndex = 0;
-
-var material = new THREE.LineBasicMaterial({ color: 0xff0000 });
 
 
 function  drawLine()
@@ -216,9 +224,15 @@ function DoCNC(msg){
             gcode = response;
             gCodePoints = JSON.parse(gcode).gcode;
 
-            _viewer = viewerApp.myCurrentViewer;
-            modelOffset = _viewer.model.getData().globalOffset;
-            startCNC();
+            if(gCodePoints.length > 0) {
+                _viewer = viewerApp.myCurrentViewer;
+                modelOffset = _viewer.model.getData().globalOffset;
+                gCodeIndex = 0;
+                startCNC();
+            }
+            else {
+                alert('no CNC data with this model!');
+            }
         }
     }).fail (function (xhr, ajaxOptions, thrownError) {
         console.log('get token error:' + response.err);
@@ -226,6 +240,8 @@ function DoCNC(msg){
 }
 
 function startCNC() {
+
+
     var geometry = new THREE.Geometry();
     gCodeIndex = 0;
 
@@ -245,6 +261,18 @@ function startCNC() {
     lasPT = new THREE.Vector3(x, y, z);
 
     gCodeIndex++;
+
+
+    var geometry_cylinder = new THREE.CylinderGeometry( 1, 1, 10, 32 );
+    var material_cylinder= new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var cylinder = new THREE.Mesh( geometry_cylinder, material_cylinder );
+    _viewer.impl.scene.add(cylinder);
+    _viewer.impl.invalidate(true);
+
+    cylinder.translateX( 10 );
+    cylinder.translateY( 10 );
+    cylinder.translateZ( 10 );
+
 
     timer = setInterval(drawLine, 100);
 }
