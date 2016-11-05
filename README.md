@@ -14,4 +14,4 @@ This is  sample for AU China 2016. It demos the basic scenarios of Future of Mak
  
   2)	Similar to #1, but the presenter will log in with number #0. The presenter sends the model to the webpage. So when presenter clicks RFQ, all vendors can get the notification. They can start to bid. The bid value is a random value which means how much the cost is. In the page of presenter, bid table will be shown up.
  
- 3) Similar to #2, but a click the first button of Fusion plugin to generate a chair, next click any other button to generate carving curves. Then the model with g-code will be sent to the customer, next to vendor. The customer can click CNC button, the simulation process of CNC will run in the viewer of vendor’s page.    
+ 3) Similar to #2, but click the first button of Fusion plugin to generate a chair, next click any other button to generate carving curves. Then the model with g-code will be sent to the customer, next to vendor. The customer can click CNC button, the simulation process of CNC will run in the viewer of vendor’s page.    
