@@ -1,0 +1,39 @@
+
+<html>
+<head>
+    <title>Investigation on Prototype of FOMT</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <script src="../js/jquery-2.1.2.min.js"></script>
+    <link href="../js/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<style type="text/css">
+    input{width:400px;height:200px;font-size:150px}
+    .btn-primary{width:200px;height:120px;font-size:50px}
+</style>
+
+<body >
+
+<div class="container">
+    <h2>Please Input Your Seat Number</h2>
+      <input type="number" min="1" max="50"   value = "1" id="usernum"/>
+    <p></p>
+    <button type="button" id="login" class="btn btn-primary">Log In</button>
+ </div>
+
+</body>
+
+<script>
+    $('#login').click(function(evt){
+        var numVal = $('#usernum').val();
+        if(numVal%2 == 0)
+        {
+            window.location.href = 'vendor.html?vendorNum='+ numVal;
+        }
+        else
+        {
+            window.open ('customer.html?customerNum='+ numVal, '_blank') ;
+        }
+    });
+</script>
+</html>

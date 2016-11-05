@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 
     <!-- jquery -->
-    <script src="js/jquery-2.1.2.min.js"></script>
+    <script src="../js/jquery-2.1.2.min.js"></script>
 
     <!-- Viewer production -->
     <link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.min.css?v=2.7.*" type="text/css">
@@ -18,37 +18,34 @@
     <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/Autodesk360App.js?v=2.7.*"></script>
 
     <!-- Bootstrap CSS -->
-    <link href="js/bootstrap.min.css" rel="stylesheet" />
-    <script src="js/bootstrap.min.js"></script>
-
-    <script src="js/socket.io-1.0.0.js"></script>
-
+    <link href="../js/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/sorttable.js"></script>
+    <script src="../js/socket.io-1.0.0.js"></script>
     <script src="js-main/RFQ.js"></script>
-
 </head>
 
 <body >
 
     <div class="page-header ">
-        <h1>智慧制造平台原型探索</h1>
-        <h4>演示询价过程</h4>
-        <h4>检查模型信息，查看模型，决定是否询价</h4>
-    </div>
+        <h1>Investigation on Prototype of FOMT</h1>
+        <h4>Review the information of model. Decide if RFQ to the vendors</h4>
+     </div>
 
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="col-xs-11">
-                <img id="partimg" src="images/xiaodong.png">
+                <img id="partimg" src="../images/xiaodong.png">
                 <div>
-                     <h3><span class="label label-primary">零件名</span></h3>
+                     <h3><span class="label label-primary">Part Name</span></h3>
                      <h3><span class="label label-default" id="filename">abc</span></h3>
-                    <h3><span class="label label-primary">零件编号</span></h3>
+                    <h3><span class="label label-primary">Part Number</span></h3>
                     <h3><span class="label label-default" id="partnum">123</span></h3>
                  </div>
 
 
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">材料
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Material
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" id="materialDropdown">
                         <li><a href="#">Steel</a></li>
@@ -59,7 +56,7 @@
                 </div>
 
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">数量
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Quantity
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu" id="quantityDropdown">
                         <li><a href="#">0-100</a></li>
@@ -71,38 +68,38 @@
                 </div>
 
                 <div >
-                    <h3><span class="label label-primary">描述</span></h3>
+                    <h3><span class="label label-primary">Description</span></h3>
 
-                    <textarea class="form-control" rows="5" id="desc">这里做一些描述</textarea>
+                    <textarea class="form-control" rows="5" id="desc">Describe your requirement in detail</textarea>
                 </div >
 
 
                 <div >
-                    <h3><span class="label label-primary">公司名</span></h3>
+                    <h3><span class="label label-primary">Company</span></h3>
                     <input  type="text" class="form-control" id="company" value="Autodesk">
                 </div >
 
                 <div >
-                    <h3><span class="label label-primary">联系人</span></h3>
-                    <input  type="text" class="form-control" id="contact" value="梁晓冬">
+                    <h3><span class="label label-primary">Contact</span></h3>
+                    <input  type="text" class="form-control" id="contact" value="Xiaodong Liang">
                 </div >
 
                 <div>
-                    <h3><span class="label label-primary">邮件</span></h3>
+                    <h3><span class="label label-primary">Email</span></h3>
                     <input  type="text" class="form-control" id="email" value="xiaodong.liang@autodesk.com">
                 </div >
 
                 <div >
 
-                    <h3><span class="label label-primary">联系电话</span></h3>
+                    <h3><span class="label label-primary">Phone</span></h3>
                     <input  type="text" class="form-control" id="phone" value="18511530684">
                 </div >
 
                 <p>
                     <div>
-                        <button id="downloadfile"  class="btn btn-lg btn-primary">模型下载</button>
-                        <button id = "placerfq" class="btn btn-lg btn-warning">询价</button>
-                        <button  id = "pushcnc" class="btn btn-lg btn-danger">机加工</button>
+                        <button id="downloadfile"  class="btn btn-lg btn-primary">Download Model</button>
+                        <button id = "placerfq" class="btn btn-lg btn-warning">RFQ</button>
+                        <button  id = "pushcnc" class="btn btn-lg btn-danger">CNC Simulation</button>
                     </div>
                 </p>
 
@@ -111,12 +108,14 @@
                         <div class="uicomponent-panel-controls-container">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">竞价</h3>
+                                    <h3 class="panel-title">Bid</h3>
                                </div>
-                               <table class="table table-hover table-responsive" id = "bidtable">
+                               <table class="table table-hover table-responsive sortable" id = "bidtable">
                                     <thead>
-                                        <th>提供商编号</th><th>报价</th>
+                                        <th>Vendor Number</th><th>Quote</th>
                                     </thead>
+                                   <tbody>
+                                   </tbody>
                                </table>
                            </div>
                         </div>

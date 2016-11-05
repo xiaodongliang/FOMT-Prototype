@@ -38,22 +38,21 @@ function  refreshRFQPage(msg)
    var newHTML =
            '<img id="partimg" src="data:image/jpeg;base64,' + RFQInfo.image +'"/>'
            +'<br><br>'
-           +'<h3 ><span class="label label-default" id="filename">零件名</span>' + RFQInfo.filename + '</h3>'
-           +'<h3 ><span class="label label-default"  id="partnum">零件编号</span>' + RFQInfo.partnum + '</h3>'
-           +'<h3 ><span class="label label-default"  id="material">材料</span>' + RFQInfo.material + '</h3>'
-           +'<h3 ><span class="label label-default"  id="quantity">数量</span>' + RFQInfo.quantity + '</h3>'
-           +'<button class="btn btn-primary" id="downloadfile" >模型下载</button>'
+           +'<h3 ><span class="label label-default" id="filename">Part Name</span>' + RFQInfo.filename + '</h3>'
+           +'<h3 ><span class="label label-default"  id="partnum">Part Number</span>' + RFQInfo.partnum + '</h3>'
+           +'<h3 ><span class="label label-default"  id="material">Material </span>' + RFQInfo.material + '</h3>'
+           +'<h3 ><span class="label label-default"  id="quantity">Quanity</span>' + RFQInfo.quantity + '</h3>'
+           +'<button class="btn btn-primary" id="downloadfile" >Download Model</button>'
            + '<div>'
-                 +'<h3><span class="label label-primary">描述</span></h3>'
-                 +'<textarea class="form-control" rows="5" id="desc">这里做一些描述</textarea>'
+                 +'<h3><span class="label label-default">Description</span></h3>'
+                 +'<textarea class="form-control" rows="5" id="desc">More Detailed Description</textarea>'
            +'</div>'
-           +'<br><br><br><br>'
-            +'<h4 ><span class="label label-default"  id="company">公司名</span>' + RFQInfo.company + '</h4>'
-           +'<h4 ><span class="label label-default"  id="contact">联系人</span>' + RFQInfo.contact + '</h4>'
-           +'<h4 ><span class="label label-default"  id="email">邮件</span>' + RFQInfo.email + '</h4>'
-           +'<h4 ><span class="label label-default"  id="phone">联系电话</span>' + RFQInfo.phone + '</h4>'
-            + '<h4 ><span class="label label-default"  id="bidCost">报价</span>000</h4>'
-           + '<button type="button" id = "bid" class="btn btn-lg btn-primary">竞价</button>'
+            +'<h3 ><span class="label label-default"  id="company">Company</span>' + RFQInfo.company + '</h3>'
+           +'<h3 ><span class="label label-default"  id="contact">Contact</span>' + RFQInfo.contact + '</h3>'
+           +'<h3 ><span class="label label-default"  id="email">Email</span>' + RFQInfo.email + '</h3>'
+           +'<h3 ><span class="label label-default"  id="phone">Phone</span>' + RFQInfo.phone + '</h3>'
+            + '<h3 ><span class="label label-default"  id="bidCost">Quote</span></h3>'
+           + '<button type="button" id = "bid" class="btn btn-lg btn-primary">Bid</button>'
            + '<div>'
            +    '<div id="viewerDiv"></div>'
            + '</div >' ;
@@ -73,14 +72,14 @@ function  refreshRFQPage(msg)
     $('#bid').click(function(evt) {
         if(isFromPresenter) {
             if(hasBid){
-                alert('您已经竞价了！');
+                alert('Your have bid！');
             }
             else {
-                var rand = Math.random(10000);
-                $('#bidCost').text(rand);
+                var rand = Math.random();
+                $('#bidCost').text(rand * 100);
                 var BidInfo = {
                     vendorNum: currentVendorNum,
-                    cost: rand
+                    cost: rand * 100
                 };
                 //send to vendor page
                 socket.emit('au_BID', JSON.stringify(BidInfo));
@@ -89,7 +88,7 @@ function  refreshRFQPage(msg)
 
         }
         else {
-            alert('抽奖尚未开始！');
+            alert('Lottery Draw not started！');
         }
    });
 }
@@ -103,7 +102,7 @@ $(document).ready (function () {
    if(vendorNum > 0){
       //attendees
       $("#useremailimg").attr('src','images/vendor.png');
-      $('#username').val('提供商编号： ' + vendorNum);
+      $('#username').val('Vendor No： ' + vendorNum);
    }
 
     socket.on('au_RFQ', function(msg) {

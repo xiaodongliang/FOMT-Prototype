@@ -148,6 +148,7 @@ router.get ('/gettoken', function (req, res) {
     console.log('[Get Forge Token]');
     lmv.getToken().then(
         function(response){
+            console.log(response.access_token);
             res.send (response) ;
         },
         function(error){

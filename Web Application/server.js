@@ -48,6 +48,13 @@ io.on('connection', function(socket){
         //send to customer 0 only for demo
         io.emit('au_IoT' , msg);
     });
+
+    socket.on('au_BIMWorker', function(msg){
+        console.log('sending BIM Worker  : ' + msg );
+        //emit the msg to target vendor
+        //send to customer 0 only for demo
+        io.emit('au_BIMWorker' , msg);
+    });
 });
 app.io = io;
 

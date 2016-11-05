@@ -222,9 +222,11 @@ class CutSeatCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
             file_select.addSelectionFilter('RootComponents')
 
             # Get user input about part
-            inputs.addStringValueInput('part_number_val', '零件代号', init_values['part_number'])
+            #inputs.addStringValueInput('part_number_val', '零件代号', init_values['part_number'])
+            inputs.addStringValueInput('part_number_val', 'Part Number', init_values['part_number'])
 
-            dropdown = inputs.addDropDownCommandInput('part_count_val', '制造个数', adsk.core.DropDownStyles.LabeledIconDropDownStyle)
+            #dropdown = inputs.addDropDownCommandInput('part_count_val', '制造个数', adsk.core.DropDownStyles.LabeledIconDropDownStyle)
+            dropdown = inputs.addDropDownCommandInput('part_count_val', 'Quantity', adsk.core.DropDownStyles.LabeledIconDropDownStyle)  
             dropdownItems = dropdown.listItems
             if 'part_count' in init_values:
                 select_dropdown = init_values['part_count']
@@ -247,14 +249,17 @@ class CutSeatCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
             else:
                 dropdownItems.add('1000+', False, '')
 
-            inputs.addStringValueInput('material_type_val', '材料', init_values['material_type'])
-            inputs.addBoolValueInput('cnc_upload', '含材质和机加工数据',True, '',init_values['cnc_upload'])
+#            inputs.addStringValueInput('material_type_val', '材料', init_values['material_type'])
+#            inputs.addBoolValueInput('cnc_upload', '含材质和机加工数据',True, '',init_values['cnc_upload'])
+            inputs.addStringValueInput('material_type_val', 'Material', init_values['material_type'])
+            inputs.addBoolValueInput('cnc_upload', 'Include CNC',True, '',init_values['cnc_upload'])
  
 
  
 
             # Make it button
-            cmd.okButtonText = '提交任务'
+            #cmd.okButtonText = '提交任务'
+            cmd.okButtonText = 'Submit'
             
             
         except:
